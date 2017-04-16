@@ -1,0 +1,56 @@
+# 2 Layer Neural Network
+import numpy as np
+
+# Nonlinearity: sigmoid function.
+def nonlin(x,deriv=False):
+    # derivative of a sigmoid: out * ( 1 - out).
+    if(deriv==True):
+        return x*(1-x)
+    return 1/(1+np.exp(-x))
+
+# Input dataset
+# Matrix of 4 training examples and 3 input nodes.
+# Initialize our input dataset as a numpy matrix.
+X = np.array([  [0,0,1], [0,1,1], [1,0,1], [1,1,1] ])
+
+# output dataset 
+# Matrix of 4 training examples and 1 output node.
+# .T is the transpose function.
+y = np.array([[0,0,1,1]]).T
+
+# seed random numbers
+np.random.seed(1)
+
+# Weight matrix syn0 of dimension (3,1)
+# dim(3,1) since we have 3 inputs & 1 Output.
+syn0 = 2*np.random.random((3,1)) - 1
+
+# Train the model
+for iter in range(10000):
+    # Forward propagation
+    l0 = X
+    # Prediction Step
+    # Multiply matrices l0 (4 X 3) & syn0 (3 X 1) and pass the resulting matrix (4 X 1) to sigmoid function nonlin
+    l1 = nonlin(np.dot(l0,syn0))
+
+    # Error calculation
+    l1_error = y - l1
+
+    # Weighted Derivate
+    # Multiply the error by the slope of
+    # the sigmoid at the values in l1
+    l1_delta = l1_error * nonlin(l1,True)
+
+    # update weights
+    syn0 += np.dot(l0.T,l1_delta)
+
+print ("Output After Training: ")
+print (l1)
+
+____________________________________________________________________
+
+Output After Training: 
+[[ 0.00966449]
+ [ 0.00786506]
+ [ 0.99358898]
+ [ 0.99211957]]
