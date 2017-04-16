@@ -1,6 +1,6 @@
 # Toy-Neural-Network
 
-A toy Neural Network trained with back propogation:
+A toy Neural Network trained with back propogation for:
 ____________________
 | Inputs    | Output|
 ____________________
