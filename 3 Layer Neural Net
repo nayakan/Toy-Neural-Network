@@ -1,0 +1,74 @@
+# 3 Layer Neural Net
+import numpy as np
+
+# Nonlinearity: sigmoid function.
+def nonlin(x,deriv=False):
+    # derivative of a sigmoid: out * ( 1 - out).
+    if(deriv==True):
+        return x*(1-x)
+    return 1/(1+np.exp(-x))
+
+"""
+Input dataset:
+Matrix of 4 training examples and 3 input nodes.
+Initialize our input dataset as a numpy matrix.
+"""
+X = np.array([[0,0,1], 
+			[0,1,1], 
+			[1,0,1], 
+			[1,1,1]])
+
+"""
+ output dataset:
+ Matrix of 4 training examples and 1 output node.
+"""
+y = np.array([[0],
+			[0],
+			[1],
+			[1]])
+
+# seed random numbers
+np.random.seed(1)
+
+"""
+Synapse matrices for two layers
+with randomly initialized weights
+"""
+syn0 = 2*np.random.random((3,4)) - 1
+syn1 = 2*np.random.random((4,1)) - 1
+
+# Train the model
+for iter in range(10000):
+    # Forward propagation
+    l0 = X
+    l1 = nonlin(np.dot(l0,syn0))
+    l2 = nonlin(np.dot(l1,syn1))
+
+    # Error calculation
+    l2_error = y - l2
+
+    """
+    Print out the avg error rate at set intervals 
+    to check if the error rate goes down.
+    """
+    if (iter % 10000) == 0:
+    	print ("Error:" + str(np.mean(np.abs(l2_error))))
+
+    # Backpropogation of errors 
+    l2_delta = l2_error*nonlin(l2,deriv=True)
+    l1_error = l2_delta.dot(syn1.T)
+    l1_delta = l1_error * nonlin(l1,deriv=True)
+
+    # Update Weights
+    syn1 += l1.T.dot(l2_delta)
+    syn0 += l0.T.dot(l1_delta)
+
+print ("Output After Training: ")
+print (l2)
+
+#################################################################
+Output After Training: 
+[[ 0.00510229]
+ [ 0.00421887]
+ [ 0.99493875]
+ [ 0.99437164]]
