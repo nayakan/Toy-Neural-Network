@@ -13,19 +13,13 @@ Input dataset:
 Matrix of 4 training examples and 3 input nodes.
 Initialize our input dataset as a numpy matrix.
 """
-X = np.array([[0,0,1], 
-			[0,1,1], 
-			[1,0,1], 
-			[1,1,1]])
+X = np.array([[0,0,1], [0,1,1], [1,0,1], [1,1,1]])
 
 """
  output dataset:
  Matrix of 4 training examples and 1 output node.
 """
-y = np.array([[0],
-			[0],
-			[1],
-			[1]])
+y = np.array([[0], [0], [1], [1]])
 
 # seed random numbers
 np.random.seed(1)
